@@ -74,9 +74,9 @@ Function Get-NaVolDetails{
                     }
                     if ($svsource){$IsSnapvaultSource = $true}else{$IsSnapvaultSource = $false}
                     if($svdesthash.count -gt 0){
-                        $svdest = $svdesthash.item("/vol/$($vol.name)/$($vol.name)")
-                        $Snapvaultdest = $svdest.secondary 
-                        $SnapvaultSource = $svdest.primary
+                        $svdest = $svdesthash.GetEnumerator() | where {$_.Name -like "/vol/$($vol.name)/*"}
+                        if($svdest){$Snapvaultdest = $svdest.value.secondary}
+                        if($svdest){$SnapvaultSource = $svdest.value.primary}
                     }
                     if ($svdest){$IsSnapvaultDest = $true}else{$IsSnapvaultDest = $false}
                 }
